@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">Wether</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Weather</string>
+    <string name="title_today">Today</string>
+    <string name="title_week">Week</string>
+    <string name="title_map">Map</string>
+    <string name="map_key">AIzaSyAKCenwCVT44_VW4WUXYwtnUwq_ko-kUA0</string>
+    <string name="my_location">MyLocation</string>
+    <string name="search">Search</string>
+    <string name="feeling_title">По ощущениям</string>
+    <string name="temperature_title">Температура</string>
 </resources>
