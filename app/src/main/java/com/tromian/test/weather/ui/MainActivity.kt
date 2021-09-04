@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
+    fun updatePlace(latLng: LatLng) {
+
+    }
 
     private fun autoCompleteRun() {
         val fields = listOf(Place.Field.NAME, Place.Field.LAT_LNG)

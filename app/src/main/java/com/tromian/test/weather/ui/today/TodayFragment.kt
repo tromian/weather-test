@@ -49,11 +49,11 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         return root
     }
 
-    fun setupDataObservers() {
+
+    private fun setupDataObservers() {
         (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
             todayViewModel.defaultCity = it.name.toString()
             todayViewModel.loadWeather()
-            //toolbar.title = todayViewModel.defaultCity
         })
 
         todayViewModel.cityWeather.observe(viewLifecycleOwner, Observer {

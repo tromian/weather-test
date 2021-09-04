@@ -6,22 +6,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.tromian.test.weather.AppConstants.REQUEST_CODE_LOCATION_PERMISSION
 import com.tromian.test.weather.TrackingUtility
+import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentMapBinding
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
+    GoogleMap.OnMarkerClickListener,
+    GoogleMap.OnMapClickListener,
     EasyPermissions.PermissionCallbacks {
 
     private val mapViewModel: MapViewModel by viewModels()
@@ -29,8 +35,9 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
 
     private val binding get() = _binding!!
 
-    lateinit var map: GoogleMap
-    lateinit var mapView: MapView
+    private lateinit var map: GoogleMap
+    private var marker: Marker? = null
+    private lateinit var mapView: MapView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +52,15 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
         binding.floatingMyLocation.setOnClickListener {
             requestPermissions()
         }
+        setupDataObservers()
         return root
+    }
+
+    private fun setupDataObservers() {
+        (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
+            it.latLng?.let { latlng -> mapViewModel.setCoordinate(latlng) }
+        })
+
     }
 
 
@@ -132,7 +147,37 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
         map = googleMap
         map.mapType = GoogleMap.MAP_TYPE_NORMAL
         mapViewModel.coordinate.observe(viewLifecycleOwner, Observer {
-            map.addMarker(MarkerOptions().position(LatLng(it.lat, it.lon)))
+            updateMarkerLocation(it)
         })
+        map.setOnMarkerClickListener(this)
+        map.setOnMapClickListener(this)
+    }
+
+    private fun updateMarkerLocation(latLng: LatLng) {
+        map.clear()
+        marker = map.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .draggable(true)
+        )
+        if (marker != null) {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker!!.position, 10f))
+        }
+        marker?.tag = "tag"
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        if (marker.tag == "tag") {
+            Toast.makeText(
+                requireContext(),
+                "${marker.position} has been clicked ",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        return false
+    }
+
+    override fun onMapClick(latLng: LatLng) {
+        updateMarkerLocation(latLng)
     }
 }
