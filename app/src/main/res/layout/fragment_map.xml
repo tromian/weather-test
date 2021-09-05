@@ -29,6 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck"
         android:focusable="true"
+        android:visibility="gone"
         android:contentDescription="@string/my_location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

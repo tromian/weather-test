@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.model.LatLng
@@ -22,6 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tromian.test.weather.AppConstants
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,6 +55,12 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
+    fun updatePlace(place: Place) {
+        lifecycleScope.launch {
+            autocompletePlaceResult.postValue(place)
+        }
+
+    }
 
     private fun autoCompleteRun() {
         val fields = listOf(Place.Field.NAME, Place.Field.LAT_LNG)

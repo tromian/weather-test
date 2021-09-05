@@ -44,7 +44,7 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
         })
         val rvWeekList = binding.recyclerViewDaily
         rvWeekList.adapter = adapter
-        weekViewModel.dailyList.observe(viewLifecycleOwner, {
+        weekViewModel.dailyWeatherList.observe(viewLifecycleOwner, {
             adapter.submitList(it)
         })
 

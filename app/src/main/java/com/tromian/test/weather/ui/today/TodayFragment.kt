@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -49,11 +50,10 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         return root
     }
 
-    fun setupDataObservers() {
+
+    private fun setupDataObservers() {
         (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
-            todayViewModel.defaultCity = it.name.toString()
-            todayViewModel.loadWeather()
-            //toolbar.title = todayViewModel.defaultCity
+            todayViewModel.loadWeather(it.name.toString())
         })
 
         todayViewModel.cityWeather.observe(viewLifecycleOwner, Observer {
@@ -67,22 +67,36 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         _binding = null
     }
 
-
     @SuppressLint("SetTextI18n")
-    private fun bindViews(cityWeather: CityWeather) {
-        val temp = binding.tvCurrentTemperature
-        val feelTemp = binding.tvFeelingTemperature
-        val clouds = binding.tvClouds
-        val weatherImage = binding.ivWeatherIcon
-        val pressure = binding.tvPressure
+    private fun bindViews(cityWeather: CityWeather?) {
 
-        temp.text = "${cityWeather.main.temp}"
-        feelTemp.text = "${cityWeather.main.feelsLike}"
-        clouds.text = "${cityWeather.clouds.all} %"
-        pressure.text = "${cityWeather.main.pressure} гПа"
-        Glide.with(this)
-            .load("https://openweathermap.org/img/wn/${cityWeather.weather[0].icon}.png")
-            .into(weatherImage)
+        if (cityWeather != null) {
+            binding.root.children.forEach {
+                if (it.id == R.id.tvError) {
+                    binding.tvError.visibility = View.GONE
+                } else it.visibility = View.VISIBLE
+            }
+            val temp = binding.tvCurrentTemperature
+            val feelTemp = binding.tvFeelingTemperature
+            val clouds = binding.tvClouds
+            val weatherImage = binding.ivWeatherIcon
+            val pressure = binding.tvPressure
+
+            temp.text = "${cityWeather.main.temp}"
+            feelTemp.text = "${cityWeather.main.feelsLike}"
+            clouds.text = "${cityWeather.clouds.all} %"
+            pressure.text = "${cityWeather.main.pressure} гПа"
+            Glide.with(this)
+                .load("https://openweathermap.org/img/wn/${cityWeather.weather[0].icon}.png")
+                .into(weatherImage)
+
+        } else {
+            binding.root.children.forEach {
+                if (it.id == R.id.tvError) {
+                    binding.tvError.visibility = View.VISIBLE
+                } else it.visibility = View.GONE
+            }
+        }
 
     }
 

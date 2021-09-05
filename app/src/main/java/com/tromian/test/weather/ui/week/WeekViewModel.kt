@@ -5,16 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.libraries.places.api.model.Place
+import com.tromian.test.weather.data.DailyWeather
 import com.tromian.test.weather.data.WeatherRepository
-import com.tromian.test.weather.data.daily.Daily
 import kotlinx.coroutines.launch
 
 class WeekViewModel(
     private val repository: WeatherRepository
 ) : ViewModel() {
 
-    private val _dailyList = MutableLiveData<List<Daily>>()
-    val dailyList: LiveData<List<Daily>> = _dailyList
+    private val _dailyList = MutableLiveData<List<DailyWeather>>()
+    val dailyWeatherList: LiveData<List<DailyWeather>> = _dailyList
 
     fun loadWeeklyWeather(place: Place) {
         viewModelScope.launch {
