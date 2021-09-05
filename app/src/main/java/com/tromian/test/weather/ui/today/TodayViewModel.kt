@@ -12,17 +12,17 @@ class TodayViewModel(
     private val repository: WeatherRepository
 ) : ViewModel() {
 
-    private val _cityWeather = MutableLiveData<CityWeather>()
-    val cityWeather: LiveData<CityWeather> = _cityWeather
+    private val _cityWeather = MutableLiveData<CityWeather?>()
+    val cityWeather: LiveData<CityWeather?> = _cityWeather
     var defaultCity = "Kyiv"
 
     init {
-        loadWeather()
+        loadWeather(defaultCity)
     }
 
-    fun loadWeather() {
+    fun loadWeather(city: String) {
         viewModelScope.launch {
-            _cityWeather.postValue(repository.loadTodayByCityName(defaultCity))
+            _cityWeather.postValue(repository.loadTodayByCityName(city))
         }
     }
 }

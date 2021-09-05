@@ -1,6 +1,5 @@
 package com.tromian.test.weather.data
 
-import com.tromian.test.weather.data.daily.DailyResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

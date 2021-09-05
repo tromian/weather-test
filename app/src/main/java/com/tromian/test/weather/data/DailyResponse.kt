@@ -1,4 +1,4 @@
-package com.tromian.test.weather.data.daily
+package com.tromian.test.weather.data
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -7,14 +7,14 @@ import kotlinx.parcelize.Parcelize
 
 data class DailyResponse(
     @SerializedName("daily")
-    val dailyList: List<Daily>
+    val dailyWeatherList: List<DailyWeather>
 )
 
 /**
  * Ответ API данных о погоде на день
  * */
 @Parcelize
-data class Daily(
+data class DailyWeather(
     @SerializedName("clouds")
     /** Облачность,% */
     val clouds: Int,
