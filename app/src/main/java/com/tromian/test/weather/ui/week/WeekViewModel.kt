@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.libraries.places.api.model.Place
-import com.tromian.test.weather.data.DailyWeather
 import com.tromian.test.weather.data.WeatherRepository
+import com.tromian.test.weather.data.daily.DailyWeather
 import kotlinx.coroutines.launch
 
 class WeekViewModel(

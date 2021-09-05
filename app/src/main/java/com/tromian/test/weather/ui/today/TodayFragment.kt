@@ -13,8 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.tromian.test.weather.appComponent
-import com.tromian.test.weather.data.CityWeather
 import com.tromian.test.weather.data.WeatherRepository
+import com.tromian.test.weather.data.current.CurrentWeather
 import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.weather.ui.ViewModelsFactory
 import com.tromian.test.wether.R
@@ -53,7 +53,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     private fun setupDataObservers() {
         (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
-            todayViewModel.loadWeather(it.name.toString())
+            todayViewModel.loadWeather(it)
         })
 
         todayViewModel.cityWeather.observe(viewLifecycleOwner, Observer {
@@ -68,12 +68,12 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindViews(cityWeather: CityWeather?) {
+    private fun bindViews(currentWeather: CurrentWeather?) {
 
-        if (cityWeather != null) {
+        if (currentWeather != null) {
             binding.root.children.forEach {
-                if (it.id == R.id.tvError) {
-                    binding.tvError.visibility = View.GONE
+                if (it.id == R.id.error_layout) {
+                    binding.errorLayout.root.visibility = View.GONE
                 } else it.visibility = View.VISIBLE
             }
             val temp = binding.tvCurrentTemperature
@@ -82,18 +82,18 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             val weatherImage = binding.ivWeatherIcon
             val pressure = binding.tvPressure
 
-            temp.text = "${cityWeather.main.temp}"
-            feelTemp.text = "${cityWeather.main.feelsLike}"
-            clouds.text = "${cityWeather.clouds.all} %"
-            pressure.text = "${cityWeather.main.pressure} гПа"
+            temp.text = "${currentWeather.main.temp.toInt()}"
+            feelTemp.text = "${currentWeather.main.feelsLike.toInt()}"
+            clouds.text = "${currentWeather.clouds.all} %"
+            pressure.text = "${currentWeather.main.pressure} гПа"
             Glide.with(this)
-                .load("https://openweathermap.org/img/wn/${cityWeather.weather[0].icon}.png")
+                .load("https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}.png")
                 .into(weatherImage)
 
         } else {
             binding.root.children.forEach {
-                if (it.id == R.id.tvError) {
-                    binding.tvError.visibility = View.VISIBLE
+                if (it.id == R.id.error_layout) {
+                    binding.errorLayout.root.visibility = View.VISIBLE
                 } else it.visibility = View.GONE
             }
         }

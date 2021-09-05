@@ -1,4 +1,4 @@
-package com.tromian.test.weather.data
+package com.tromian.test.weather.data.current
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
  * */
 
 @Parcelize
-data class CityWeather(
+data class CurrentWeather(
     @SerializedName("clouds")
     /** Облачность,% */
     val clouds: Clouds,
@@ -62,21 +62,21 @@ data class Clouds(
     val all: Int
 ) : Parcelable
 
-//@Parcelize
-//data class Weather(
-//    @SerializedName("description")
-//    /** Погодные условия в группе */
-//    val description: String,
-//    @SerializedName("icon")
-//    /** Идентификатор значка погоды */
-//    val icon: String,
-//    @SerializedName("id")
-//    /** Идентификатор погодных условий */
-//    val id: Int,
-//    @SerializedName("main")
-//    /** Группа погодных параметров (Дождь, Снег, Экстрим и др.) */
-//    val main: String
-//) : Parcelable
+@Parcelize
+data class Weather(
+    @SerializedName("description")
+    /** Погодные условия в группе */
+    val description: String,
+    @SerializedName("icon")
+    /** Идентификатор значка погоды */
+    val icon: String,
+    @SerializedName("id")
+    /** Идентификатор погодных условий */
+    val id: Int,
+    @SerializedName("main")
+    /** Группа погодных параметров (Дождь, Снег, Экстрим и др.) */
+    val main: String
+) : Parcelable
 
 @Parcelize
 data class Wind(

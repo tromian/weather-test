@@ -7,4 +7,9 @@
     <string name="search">Search</string>
     <string name="feeling_title">По ощущениям</string>
     <string name="temperature_title">Температура</string>
+    <string name="title_min_temp">Мин. темп. °С</string>
+    <string name="title_max_temp">Макc. темп. °С</string>
+    <string name="text_loading_error">Не удалось загрузить данные по этому городу,
+        проверьте подключение к интернету или выберите другой город.</string>
+    <string name="retry_btn_title">Retry</string>
 </resources>

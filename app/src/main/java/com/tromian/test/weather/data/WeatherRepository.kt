@@ -3,6 +3,8 @@ package com.tromian.test.weather.data
 import android.content.Context
 import android.util.Log
 import com.google.android.libraries.places.api.model.Place
+import com.tromian.test.weather.data.current.CurrentWeather
+import com.tromian.test.weather.data.daily.DailyWeather
 import retrofit2.HttpException
 import javax.inject.Inject
 class WeatherRepository @Inject constructor(
@@ -10,10 +12,13 @@ class WeatherRepository @Inject constructor(
     private val context: Context
 ) {
 
-    suspend fun loadTodayByCityName(cityName: String): CityWeather? {
+    suspend fun loadCurrentWeatherByCoord(place: Place): CurrentWeather? {
         return if (NetworkConnection.isNetworkAvailable(context)) {
             try {
-                weatherApi.getWeatherByCityName(cityName)
+                weatherApi.getCurrentWeatherByCoordinate(
+                    place.latLng?.latitude.toString(),
+                    place.latLng?.longitude.toString()
+                )
             } catch (e: HttpException) {
                 e.message?.let { Log.e("http", it) }
                 null

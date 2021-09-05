@@ -1,4 +1,4 @@
-package com.tromian.test.weather.data
+package com.tromian.test.weather.data.daily
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -42,6 +42,14 @@ data class DailyWeather(
     @SerializedName("wind_speed")
     /** Скорость ветра */
     val wind_speed: Double
+) : Parcelable
+
+@Parcelize
+data class Hourly(
+    @SerializedName("dt")
+    val dt: Int,
+    @SerializedName("temp")
+    val temp: Double,
 ) : Parcelable
 
 @Parcelize
