@@ -43,23 +43,30 @@ class MainActivity : AppCompatActivity() {
             setContentView(it.root)
         }
         setupToolbar()
-        val navView: BottomNavigationView = binding.navView
-        if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, AppConstants.MAP_KEY)
-        }
-        Places.createClient(this)
+        setupNavigation()
+        initPlaces()
 
+    }
+
+    private fun setupNavigation() {
+        val navView: BottomNavigationView = binding.navView
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
         navView.setupWithNavController(navController)
     }
 
+    private fun initPlaces() {
+        if (!Places.isInitialized()) {
+            Places.initialize(applicationContext, AppConstants.GOOGLE_API_KEY)
+            Places.createClient(this)
+        }
+    }
+
     fun updatePlace(place: Place) {
         lifecycleScope.launch {
             autocompletePlaceResult.postValue(place)
         }
-
     }
 
     private fun autoCompleteRun() {
@@ -117,6 +124,10 @@ class MainActivity : AppCompatActivity() {
             return
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    companion object {
+        const val PLACE_KEY = "place"
     }
 
 }

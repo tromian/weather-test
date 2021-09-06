@@ -1,4 +1,4 @@
-package com.tromian.test.weather.data
+package com.tromian.test.weather.data.network
 
 import com.tromian.test.weather.data.current.CurrentWeather
 import com.tromian.test.weather.data.daily.DailyResponse

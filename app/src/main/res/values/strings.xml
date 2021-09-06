@@ -10,6 +10,7 @@
     <string name="title_min_temp">Мин. темп. °С</string>
     <string name="title_max_temp">Макc. темп. °С</string>
     <string name="text_loading_error">Не удалось загрузить данные по этому городу,
-        проверьте подключение к интернету или выберите другой город.</string>
+        проверьте подключение к интернету.</string>
     <string name="retry_btn_title">Retry</string>
+    <string name="text_weather_week">Прогноз погоды на неделю</string>
 </resources>

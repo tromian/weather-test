@@ -5,9 +5,14 @@ import android.util.Log
 import com.google.android.libraries.places.api.model.Place
 import com.tromian.test.weather.data.current.CurrentWeather
 import com.tromian.test.weather.data.daily.DailyWeather
+import com.tromian.test.weather.data.database.WeatherDB
+import com.tromian.test.weather.data.network.NetworkConnection
+import com.tromian.test.weather.data.network.WeatherApi
 import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 class WeatherRepository @Inject constructor(
+    private val db: WeatherDB,
     private val weatherApi: WeatherApi,
     private val context: Context
 ) {
@@ -21,6 +26,9 @@ class WeatherRepository @Inject constructor(
                 )
             } catch (e: HttpException) {
                 e.message?.let { Log.e("http", it) }
+                null
+            } catch (e: IOException) {
+                e.message?.let { Log.e("IOException", it) }
                 null
             }
         } else null

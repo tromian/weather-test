@@ -48,7 +48,6 @@ class WeekListAdapter(val itemCallback: (itemId: Int) -> Unit) :
         }
 
         fun dateFormat(unixTime: Long): String {
-
             return Instant
                 .ofEpochSecond(unixTime)
                 .atZone(ZoneId.systemDefault())

@@ -10,7 +10,7 @@ object AppConstants {
     const val WEATHER_API_KEY = BuildConfig.OpenWetherAPIKey
     const val KYIV_LAT = 50.4333
     const val KYIV_LON = 30.5167
-    const val MAP_KEY = BuildConfig.MAPS_API_KEY
+    const val GOOGLE_API_KEY = BuildConfig.MAPS_API_KEY
     const val KYIV_NAME = "Kyiv"
 
 }

@@ -48,7 +48,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+
         mapView = binding.mapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
@@ -56,7 +56,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
 //            requestPermissions()
 //        }
         setupDataObservers()
-        return root
+        return binding.root
     }
 
     private fun setupDataObservers() {

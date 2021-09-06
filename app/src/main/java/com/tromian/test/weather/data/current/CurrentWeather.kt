@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 /**
- * Обьект погоды по названию города в отвеете от АПИ
+ * Текущее значение погоды
  * */
 
 @Parcelize
@@ -13,9 +13,6 @@ data class CurrentWeather(
     @SerializedName("clouds")
     /** Облачность,% */
     val clouds: Clouds,
-    @SerializedName("coord")
-    /** Географическое положение города */
-    val coordinate: Coordinate,
     @SerializedName("dt")
     /** Время расчета данных, unix, UTC */
     val dt: Long,
@@ -86,14 +83,4 @@ data class Wind(
     @SerializedName("speed")
     /** Скорость ветра метр/сек */
     val speed: Double
-) : Parcelable
-
-@Parcelize
-data class Coordinate(
-    @SerializedName("lat")
-    /** широта */
-    val lat: Double,
-    @SerializedName("lon")
-    /** долгота */
-    val lon: Double
 ) : Parcelable

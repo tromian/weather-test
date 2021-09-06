@@ -3,8 +3,9 @@ package com.tromian.test.weather
 import android.app.Application
 import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.tromian.test.weather.data.WeatherApi
 import com.tromian.test.weather.data.WeatherRepository
+import com.tromian.test.weather.data.database.WeatherDB
+import com.tromian.test.weather.data.network.WeatherApi
 import com.tromian.test.weather.ui.today.TodayFragment
 import com.tromian.test.weather.ui.week.WeekFragment
 import dagger.BindsInstance
@@ -43,16 +44,17 @@ interface AppComponent {
 @Qualifier
 annotation class WeatherApiQualifier
 
-@Module(includes = [NetworkModule::class])
+@Module(includes = [NetworkModule::class, LocalDBModule::class])
 class AppModule {
 
     @Provides
     @Singleton
     fun provideRepository(
+        localDB: WeatherDB,
         weatherApi: WeatherApi,
-        appContext: Application
+        appContext: Application,
     ): WeatherRepository {
-        return WeatherRepository(weatherApi, appContext)
+        return WeatherRepository(localDB, weatherApi, appContext)
     }
 }
 
@@ -96,4 +98,14 @@ class NetworkModule {
 
         return retrofit.create(WeatherApi::class.java)
     }
+}
+
+@Module
+class LocalDBModule {
+    @Provides
+    @Singleton
+    fun provideLocalDB(appContext: Application): WeatherDB {
+        return WeatherDB.getInstance(appContext)
+    }
+
 }

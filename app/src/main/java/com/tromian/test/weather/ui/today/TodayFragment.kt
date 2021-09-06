@@ -3,7 +3,6 @@ package com.tromian.test.weather.ui.today
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,11 +42,10 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTodayBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        Log.i(TAG, "$this")
 
         setupDataObservers()
-        return root
+
+        return binding.root
     }
 
 
@@ -81,11 +79,14 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             val clouds = binding.tvClouds
             val weatherImage = binding.ivWeatherIcon
             val pressure = binding.tvPressure
+            val description = binding.tvDescription
 
-            temp.text = "${currentWeather.main.temp.toInt()}"
-            feelTemp.text = "${currentWeather.main.feelsLike.toInt()}"
+            temp.text = "${currentWeather.main.temp.toInt()} °С"
+            feelTemp.text = "${currentWeather.main.feelsLike.toInt()} °С"
             clouds.text = "${currentWeather.clouds.all} %"
             pressure.text = "${currentWeather.main.pressure} гПа"
+            description.text = currentWeather.weather[0].description
+
             Glide.with(this)
                 .load("https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}.png")
                 .into(weatherImage)
