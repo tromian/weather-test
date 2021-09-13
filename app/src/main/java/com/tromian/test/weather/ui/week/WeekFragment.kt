@@ -65,7 +65,7 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     private fun openFragment(itemId: Int) {
         val dailyWeather = weekViewModel.dailyWeatherList.value?.get(itemId)
         if (dailyWeather != null) {
-            val action = WeekFragmentDirections.actionNavigationWeekToDetailsFragment(dailyWeather)
+            val action = WeekFragmentDirections.actionWeekFragmentToDetailsFragment(dailyWeather)
             findNavController().navigate(action)
         }
     }

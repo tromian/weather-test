@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -19,7 +17,6 @@ import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tromian.test.weather.AppConstants
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.ActivityMainBinding
@@ -42,19 +39,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-        setupToolbar()
-        setupNavigation()
+        //setupToolbar()
+        //setupNavigation()
         initPlaces()
-
     }
 
-    private fun setupNavigation() {
-        val navView: BottomNavigationView = binding.navView
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-        val navController = navHostFragment.navController
-        navView.setupWithNavController(navController)
-    }
+//    private fun setupNavigation() {
+//        val navView: BottomNavigationView = binding.navView
+//        val navHostFragment =
+//            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+//        val navController = navHostFragment.navController
+//        navView.setupWithNavController(navController)
+//    }
 
     private fun initPlaces() {
         if (!Places.isInitialized()) {
@@ -91,15 +87,15 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setupToolbar() {
-        toolbar = binding.toolbar
-        toolbar.title = autocompletePlaceResult.value?.name
-        autocompletePlaceResult.observe(this, {
-            toolbar.title = it.name
-        })
-        setSupportActionBar(toolbar)
-        toolbar.inflateMenu(R.menu.today_toolbar_menu)
-    }
+//    private fun setupToolbar() {
+//        toolbar = binding.toolbar
+//        toolbar.title = autocompletePlaceResult.value?.name
+//        autocompletePlaceResult.observe(this, {
+//            toolbar.title = it.name
+//        })
+//        setSupportActionBar(toolbar)
+//        toolbar.inflateMenu(R.menu.today_toolbar_menu)
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {

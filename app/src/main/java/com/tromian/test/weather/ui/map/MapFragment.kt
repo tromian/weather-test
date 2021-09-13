@@ -4,9 +4,7 @@ import android.Manifest
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -42,21 +40,13 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
     private var marker: Marker? = null
     private lateinit var mapView: MapView
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMapBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentMapBinding.bind(view)
         mapView = binding.mapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-//        binding.floatingMyLocation.setOnClickListener {
-//            requestPermissions()
-//        }
         setupDataObservers()
-        return binding.root
     }
 
     private fun setupDataObservers() {
@@ -65,7 +55,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
         })
 
     }
-
 
     private fun requestPermissions() {
         if (TrackingUtility.hasLocationPermissions(requireContext())) {

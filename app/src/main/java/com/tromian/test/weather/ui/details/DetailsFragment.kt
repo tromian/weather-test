@@ -2,9 +2,7 @@ package com.tromian.test.weather.ui.details
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -26,16 +24,13 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
 
     private val detailsViewModel: DetailsViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentDailyDetailsBinding.inflate(inflater, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentDailyDetailsBinding.bind(view)
         val safeArgs: DetailsFragmentArgs by navArgs()
         weather = safeArgs.dailyWeather
         bindViews(weather)
-        return binding.root
     }
 
     override fun onDestroyView() {

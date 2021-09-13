@@ -3,9 +3,8 @@ package com.tromian.test.weather.ui.today
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,16 +35,10 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         context.appComponent.inject(this)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentTodayBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentTodayBinding.bind(view)
         setupDataObservers()
-
-        return binding.root
     }
 
 
@@ -62,7 +55,13 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("life", "${this.javaClass.name} onDestroyView")
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("life", "${this.javaClass.name} onDestroy")
     }
 
     @SuppressLint("SetTextI18n")
