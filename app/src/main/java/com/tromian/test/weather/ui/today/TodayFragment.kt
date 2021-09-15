@@ -3,7 +3,6 @@ package com.tromian.test.weather.ui.today
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -24,7 +23,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     @Inject
     lateinit var repository: WeatherRepository
 
-    private val todayViewModel by viewModels<TodayViewModel> {
+    private val viewModel by viewModels<TodayViewModel> {
         ViewModelsFactory(repository)
     }
     private var _binding: FragmentTodayBinding? = null
@@ -41,13 +40,11 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         setupDataObservers()
     }
 
-
     private fun setupDataObservers() {
-        (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
-            todayViewModel.loadWeather(it)
+        (activity as MainActivity).hostPlace.observe(viewLifecycleOwner, {
+            viewModel.loadWeather(it)
         })
-
-        todayViewModel.cityWeather.observe(viewLifecycleOwner, Observer {
+        viewModel.cityWeather.observe(viewLifecycleOwner, Observer {
             bindViews(it)
         })
     }
@@ -55,13 +52,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("life", "${this.javaClass.name} onDestroyView")
         _binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("life", "${this.javaClass.name} onDestroy")
     }
 
     @SuppressLint("SetTextI18n")

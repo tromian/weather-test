@@ -31,7 +31,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
     GoogleMap.OnMapClickListener,
     EasyPermissions.PermissionCallbacks {
 
-    private val mapViewModel: MapViewModel by viewModels()
+    private val viewModel: MapViewModel by viewModels()
     private var _binding: FragmentMapBinding? = null
 
     private val binding get() = _binding!!
@@ -50,8 +50,8 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
     }
 
     private fun setupDataObservers() {
-        (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
-            it.latLng?.let { latlng -> mapViewModel.setCoordinate(latlng) }
+        (activity as MainActivity).hostPlace.observe(viewLifecycleOwner, {
+            it.latLng?.let { latlng -> viewModel.setCoordinate(latlng) }
         })
 
     }
@@ -139,7 +139,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
         map = googleMap
         map.mapType = GoogleMap.MAP_TYPE_NORMAL
         map.uiSettings.isMyLocationButtonEnabled = true
-        mapViewModel.coordinate.observe(viewLifecycleOwner, Observer {
+        viewModel.coordinate.observe(viewLifecycleOwner, Observer {
             updateMarkerLocation(it)
         })
         map.setOnMarkerClickListener(this)

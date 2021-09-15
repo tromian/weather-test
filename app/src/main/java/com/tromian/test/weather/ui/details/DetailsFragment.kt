@@ -22,7 +22,7 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
     private val binding get() = _binding!!
     private lateinit var weather: DailyWeather
 
-    private val detailsViewModel: DetailsViewModel by viewModels()
+    private val viewModel: DetailsViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

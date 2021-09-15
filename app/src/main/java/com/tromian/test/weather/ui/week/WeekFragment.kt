@@ -24,7 +24,7 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     @Inject
     lateinit var repository: WeatherRepository
 
-    private val weekViewModel: WeekViewModel by viewModels {
+    private val viewModel: WeekViewModel by viewModels {
         ViewModelsFactory(repository)
     }
     private val adapter by lazy(LazyThreadSafetyMode.NONE) {
@@ -40,12 +40,12 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     ): View {
         _binding = FragmentWeekBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
-            weekViewModel.loadWeeklyWeather(it)
+        (activity as MainActivity).hostPlace.observe(viewLifecycleOwner, {
+            viewModel.loadWeeklyWeather(it)
         })
         val rvWeekList = binding.recyclerViewDaily
         rvWeekList.adapter = adapter
-        weekViewModel.dailyWeatherList.observe(viewLifecycleOwner, {
+        viewModel.dailyWeatherList.observe(viewLifecycleOwner, {
             adapter.submitList(it)
         })
 
@@ -63,7 +63,7 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     }
 
     private fun openFragment(itemId: Int) {
-        val dailyWeather = weekViewModel.dailyWeatherList.value?.get(itemId)
+        val dailyWeather = viewModel.dailyWeatherList.value?.get(itemId)
         if (dailyWeather != null) {
             val action = WeekFragmentDirections.actionWeekFragmentToDetailsFragment(dailyWeather)
             findNavController().navigate(action)

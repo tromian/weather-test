@@ -43,6 +43,7 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
     def dagger_version = "2.35.1"
     def navigation_version = "2.4.0-alpha02"
     def room_version = "2.3.0"
@@ -55,6 +56,8 @@ dependencies {
     // Google Map
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
+
+    implementation 'com.android.volley:volley:1.2.1'
 
     // Places
     implementation 'com.google.android.libraries.places:places:2.4.0'
