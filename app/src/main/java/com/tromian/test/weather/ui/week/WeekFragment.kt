@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import com.tromian.test.weather.appComponent
 import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.weather.ui.ViewModelsFactory
+import com.tromian.test.wether.NavGraphApplicationDirections
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentWeekBinding
 import javax.inject.Inject
@@ -65,8 +66,8 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     private fun openFragment(itemId: Int) {
         val dailyWeather = viewModel.dailyWeatherList.value?.get(itemId)
         if (dailyWeather != null) {
-            val action = WeekFragmentDirections.actionWeekFragmentToDetailsFragment(dailyWeather)
-            findNavController().navigate(action)
+            val action = NavGraphApplicationDirections.actionGlobalDetailsFragment(dailyWeather)
+            requireActivity().findNavController(R.id.main_activity_container_view).navigate(action)
         }
     }
 }

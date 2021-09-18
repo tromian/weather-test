@@ -17,10 +17,17 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.tromian.test.weather.ui.main.MainFragment"
-        android:label="MainFragment">
+        android:label="MainFragment" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.tromian.test.weather.ui.details.DetailsFragment"
+        android:label="DetailsFragment">
         <argument
             android:name="dailyWeather"
             app:argType="com.tromian.test.weather.data.daily.DailyWeather" />
     </fragment>
+    <action
+        android:id="@+id/action_global_detailsFragment"
+        app:destination="@id/detailsFragment" />
 
 </navigation>

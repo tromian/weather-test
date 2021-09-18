@@ -36,8 +36,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val PLACE_KEY = "place"
-    }
-
 }

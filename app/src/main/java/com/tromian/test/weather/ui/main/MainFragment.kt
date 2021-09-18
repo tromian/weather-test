@@ -2,7 +2,6 @@ package com.tromian.test.weather.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -53,6 +52,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             toolbar.title = it.name
             hostPalace.postValue(it)
         })
+
     }
 
     private fun autoCompleteRun() {
@@ -78,7 +78,6 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         toolbar.setOnMenuItemClickListener {
             val id = it.itemId
             if (id == R.id.search_item) {
-                Log.d("main", "search clicked")
                 autoCompleteRun()
             }
             return@setOnMenuItemClickListener true
