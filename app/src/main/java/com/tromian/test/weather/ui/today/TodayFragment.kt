@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.tromian.test.weather.appComponent
 import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.data.current.CurrentWeather
-import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.weather.ui.ViewModelsFactory
+import com.tromian.test.weather.ui.activityViewModel
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentTodayBinding
 import javax.inject.Inject
@@ -41,7 +41,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     }
 
     private fun setupDataObservers() {
-        (activity as MainActivity).hostPlace.observe(viewLifecycleOwner, {
+        activityViewModel().place.observe(viewLifecycleOwner, {
             viewModel.loadWeather(it)
         })
         viewModel.cityWeather.observe(viewLifecycleOwner, Observer {

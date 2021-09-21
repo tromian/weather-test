@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.Place
 import com.tromian.test.weather.AppConstants.REQUEST_CODE_LOCATION_PERMISSION
 import com.tromian.test.weather.TrackingUtility
-import com.tromian.test.weather.ui.MainActivity
+import com.tromian.test.weather.ui.activityViewModel
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentMapBinding
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -50,7 +50,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
     }
 
     private fun setupDataObservers() {
-        (activity as MainActivity).hostPlace.observe(viewLifecycleOwner, {
+        activityViewModel().place.observe(viewLifecycleOwner, {
             it.latLng?.let { latlng -> viewModel.setCoordinate(latlng) }
         })
 
@@ -172,7 +172,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
                 val newPlace = Place.builder()
                     .setName(address)
                     .setLatLng(marker.position).build()
-                (activity as MainActivity).updatePlace(newPlace)
+                activityViewModel().updatePlace(newPlace)
                 findNavController().navigate(R.id.navigation_today)
             }
         }

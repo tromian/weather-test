@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.tromian.test.weather.data.daily.DailyWeather
@@ -23,7 +24,6 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
     private lateinit var weather: DailyWeather
 
     private val viewModel: DetailsViewModel by viewModels()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,7 +53,11 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
         val weatherImage = binding.ivWeatherIcon
         val pressure = binding.tvPressure
         val description = binding.tvDescription
+        val backButton = binding.ivBack
 
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
         day.text = dateFormatToDayOfWeek(dailyWeather.dt)
         dayN.text = dateFormat(dailyWeather.dt)
 
@@ -66,11 +70,11 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
         pressure.text = "${dailyWeather.pressure} гПа"
         description.text = dailyWeather.weather[0].description
 
+
+
         Glide.with(this)
             .load("https://openweathermap.org/img/wn/${dailyWeather.weather[0].icon}.png")
             .into(weatherImage)
-
-
     }
 
     fun dateFormat(unixTime: Long): String {

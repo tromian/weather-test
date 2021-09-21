@@ -6,7 +6,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.data.database.WeatherDB
 import com.tromian.test.weather.data.network.WeatherApi
-import com.tromian.test.weather.ui.main.MainFragment
+import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.weather.ui.splash.SplashFragment
 import com.tromian.test.weather.ui.today.TodayFragment
 import com.tromian.test.weather.ui.week.WeekFragment
@@ -25,10 +25,9 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class])
 @Singleton
 interface AppComponent {
-
+    fun inject(fragment: MainActivity)
     fun inject(fragment: TodayFragment)
     fun inject(fragment: WeekFragment)
-    fun inject(fragment: MainFragment)
     fun inject(fragment: SplashFragment)
 
     @Component.Factory

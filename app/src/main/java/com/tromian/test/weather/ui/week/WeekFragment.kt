@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.tromian.test.weather.appComponent
 import com.tromian.test.weather.data.WeatherRepository
-import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.weather.ui.ViewModelsFactory
+import com.tromian.test.weather.ui.activityViewModel
 import com.tromian.test.wether.NavGraphApplicationDirections
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentWeekBinding
@@ -34,6 +34,11 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +46,7 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     ): View {
         _binding = FragmentWeekBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        (activity as MainActivity).hostPlace.observe(viewLifecycleOwner, {
+        activityViewModel().place.observe(viewLifecycleOwner, {
             viewModel.loadWeeklyWeather(it)
         })
         val rvWeekList = binding.recyclerViewDaily
@@ -51,11 +56,6 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
         })
 
         return root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        context.appComponent.inject(this)
     }
 
     override fun onDestroyView() {

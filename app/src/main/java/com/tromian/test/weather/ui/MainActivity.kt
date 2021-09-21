@@ -1,22 +1,28 @@
 package com.tromian.test.weather.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
 import com.tromian.test.weather.AppConstants
+import com.tromian.test.weather.appComponent
+import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.wether.databinding.ActivityMainBinding
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    val hostPlace = MutableLiveData<Place>()
+
+    @Inject
+    lateinit var repository: WeatherRepository
+    val viewModel by viewModels<MainActivityViewModel> {
+        ViewModelsFactory(repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        applicationContext.appComponent.inject(this)
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
@@ -27,12 +33,6 @@ class MainActivity : AppCompatActivity() {
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, AppConstants.GOOGLE_API_KEY)
             Places.createClient(this)
-        }
-    }
-
-    fun updatePlace(place: Place) {
-        lifecycleScope.launch {
-            hostPlace.postValue(place)
         }
     }
 

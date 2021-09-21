@@ -1,4 +1,4 @@
-package com.tromian.test.weather.ui.main
+package com.tromian.test.weather.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import com.tromian.test.weather.AppConstants
 import com.tromian.test.weather.data.WeatherRepository
 import kotlinx.coroutines.launch
 
-class MainViewModel(
+class MainActivityViewModel(
     private val repository: WeatherRepository
 ) : ViewModel() {
     private val _place = MutableLiveData<Place>().apply {
