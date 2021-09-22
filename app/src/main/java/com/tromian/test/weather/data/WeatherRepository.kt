@@ -2,7 +2,10 @@ package com.tromian.test.weather.data
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
+import com.tromian.test.weather.AppConstants
 import com.tromian.test.weather.data.current.CurrentWeather
 import com.tromian.test.weather.data.daily.DailyWeather
 import com.tromian.test.weather.data.database.WeatherDB
@@ -16,10 +19,19 @@ class WeatherRepository @Inject constructor(
     private val weatherApi: WeatherApi,
     private val context: Context
 ) {
+    private val currentPlace = MutableLiveData<Place>().apply {
+        value = Place.builder()
+            .setLatLng(LatLng(AppConstants.KYIV_LAT, AppConstants.KYIV_LON))
+            .setName(AppConstants.KYIV_NAME)
+            .build()
+    }
+
+    fun getCurrentPlace(): Place = currentPlace.value!!
 
     suspend fun loadCurrentWeatherByCoord(place: Place): CurrentWeather? {
         return if (NetworkConnection.isNetworkAvailable(context)) {
             try {
+                currentPlace.postValue(place)
                 weatherApi.getCurrentWeatherByCoordinate(
                     place.latLng?.latitude.toString(),
                     place.latLng?.longitude.toString()
@@ -44,6 +56,9 @@ class WeatherRepository @Inject constructor(
                 ).dailyWeatherList
             } catch (e: HttpException) {
                 e.message?.let { Log.e("http", it) }
+                emptyList()
+            } catch (e: IOException) {
+                e.message?.let { Log.e("IOException", it) }
                 emptyList()
             }
 

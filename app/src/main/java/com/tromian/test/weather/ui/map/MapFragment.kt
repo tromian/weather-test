@@ -4,9 +4,7 @@ import android.Manifest
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.Place
 import com.tromian.test.weather.AppConstants.REQUEST_CODE_LOCATION_PERMISSION
 import com.tromian.test.weather.TrackingUtility
-import com.tromian.test.weather.ui.MainActivity
+import com.tromian.test.weather.ui.activityViewModel
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentMapBinding
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -33,7 +31,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
     GoogleMap.OnMapClickListener,
     EasyPermissions.PermissionCallbacks {
 
-    private val mapViewModel: MapViewModel by viewModels()
+    private val viewModel: MapViewModel by viewModels()
     private var _binding: FragmentMapBinding? = null
 
     private val binding get() = _binding!!
@@ -42,30 +40,21 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
     private var marker: Marker? = null
     private lateinit var mapView: MapView
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMapBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentMapBinding.bind(view)
         mapView = binding.mapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-//        binding.floatingMyLocation.setOnClickListener {
-//            requestPermissions()
-//        }
         setupDataObservers()
-        return binding.root
     }
 
     private fun setupDataObservers() {
-        (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
-            it.latLng?.let { latlng -> mapViewModel.setCoordinate(latlng) }
+        activityViewModel().place.observe(viewLifecycleOwner, {
+            it.latLng?.let { latlng -> viewModel.setCoordinate(latlng) }
         })
 
     }
-
 
     private fun requestPermissions() {
         if (TrackingUtility.hasLocationPermissions(requireContext())) {
@@ -150,7 +139,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
         map = googleMap
         map.mapType = GoogleMap.MAP_TYPE_NORMAL
         map.uiSettings.isMyLocationButtonEnabled = true
-        mapViewModel.coordinate.observe(viewLifecycleOwner, Observer {
+        viewModel.coordinate.observe(viewLifecycleOwner, Observer {
             updateMarkerLocation(it)
         })
         map.setOnMarkerClickListener(this)
@@ -176,14 +165,14 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
 
     private fun setNewPlace(marker: Marker) {
         if (marker.tag == MARKER_TAG) {
-            val geocode = Geocoder(requireContext(), Locale.ENGLISH)
+            val geocode = Geocoder(requireActivity(), Locale.getDefault())
                 .getFromLocation(marker.position.latitude, marker.position.longitude, 1)
             val address = geocode[0].locality
             if (address != null) {
                 val newPlace = Place.builder()
                     .setName(address)
                     .setLatLng(marker.position).build()
-                (activity as MainActivity).updatePlace(newPlace)
+                activityViewModel().updatePlace(newPlace)
                 findNavController().navigate(R.id.navigation_today)
             }
         }

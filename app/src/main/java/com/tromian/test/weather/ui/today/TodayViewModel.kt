@@ -1,5 +1,6 @@
 package com.tromian.test.weather.ui.today
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +17,14 @@ class TodayViewModel(
     private val _cityWeather = MutableLiveData<CurrentWeather?>()
     val cityWeather: LiveData<CurrentWeather?> = _cityWeather
 
+    init {
+        Log.d("life", "${this.javaClass.name}, $this , init")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("life", "${this.javaClass.name}, $this , onCleared")
+    }
 
     fun loadWeather(place: Place) {
         viewModelScope.launch {

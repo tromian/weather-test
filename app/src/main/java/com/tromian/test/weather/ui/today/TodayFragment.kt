@@ -3,9 +3,7 @@ package com.tromian.test.weather.ui.today
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.tromian.test.weather.appComponent
 import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.data.current.CurrentWeather
-import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.weather.ui.ViewModelsFactory
+import com.tromian.test.weather.ui.activityViewModel
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentTodayBinding
 import javax.inject.Inject
@@ -25,7 +23,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     @Inject
     lateinit var repository: WeatherRepository
 
-    private val todayViewModel by viewModels<TodayViewModel> {
+    private val viewModel by viewModels<TodayViewModel> {
         ViewModelsFactory(repository)
     }
     private var _binding: FragmentTodayBinding? = null
@@ -36,25 +34,17 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         context.appComponent.inject(this)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentTodayBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentTodayBinding.bind(view)
         setupDataObservers()
-
-        return binding.root
     }
 
-
     private fun setupDataObservers() {
-        (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
-            todayViewModel.loadWeather(it)
+        activityViewModel().place.observe(viewLifecycleOwner, {
+            viewModel.loadWeather(it)
         })
-
-        todayViewModel.cityWeather.observe(viewLifecycleOwner, Observer {
+        viewModel.cityWeather.observe(viewLifecycleOwner, Observer {
             bindViews(it)
         })
     }

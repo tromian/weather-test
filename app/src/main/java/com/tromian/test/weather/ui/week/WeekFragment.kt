@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import com.tromian.test.weather.appComponent
 import com.tromian.test.weather.data.WeatherRepository
-import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.weather.ui.ViewModelsFactory
+import com.tromian.test.weather.ui.activityViewModel
+import com.tromian.test.wether.NavGraphApplicationDirections
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentWeekBinding
 import javax.inject.Inject
@@ -24,13 +25,18 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     @Inject
     lateinit var repository: WeatherRepository
 
-    private val weekViewModel: WeekViewModel by viewModels {
+    private val viewModel: WeekViewModel by viewModels {
         ViewModelsFactory(repository)
     }
     private val adapter by lazy(LazyThreadSafetyMode.NONE) {
         WeekListAdapter() { itemId ->
             openFragment(itemId)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -40,21 +46,16 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     ): View {
         _binding = FragmentWeekBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        (activity as MainActivity).autocompletePlaceResult.observe(viewLifecycleOwner, {
-            weekViewModel.loadWeeklyWeather(it)
+        activityViewModel().place.observe(viewLifecycleOwner, {
+            viewModel.loadWeeklyWeather(it)
         })
         val rvWeekList = binding.recyclerViewDaily
         rvWeekList.adapter = adapter
-        weekViewModel.dailyWeatherList.observe(viewLifecycleOwner, {
+        viewModel.dailyWeatherList.observe(viewLifecycleOwner, {
             adapter.submitList(it)
         })
 
         return root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        context.appComponent.inject(this)
     }
 
     override fun onDestroyView() {
@@ -63,10 +64,10 @@ class WeekFragment : Fragment(R.layout.fragment_week) {
     }
 
     private fun openFragment(itemId: Int) {
-        val dailyWeather = weekViewModel.dailyWeatherList.value?.get(itemId)
+        val dailyWeather = viewModel.dailyWeatherList.value?.get(itemId)
         if (dailyWeather != null) {
-            val action = WeekFragmentDirections.actionNavigationWeekToDetailsFragment(dailyWeather)
-            findNavController().navigate(action)
+            val action = NavGraphApplicationDirections.actionGlobalDetailsFragment(dailyWeather)
+            requireActivity().findNavController(R.id.main_activity_container_view).navigate(action)
         }
     }
 }

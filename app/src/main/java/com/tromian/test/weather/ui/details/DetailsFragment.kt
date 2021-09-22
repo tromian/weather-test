@@ -1,17 +1,18 @@
 package com.tromian.test.weather.ui.details
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.tromian.test.weather.data.daily.DailyWeather
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentDailyDetailsBinding
+import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -24,18 +25,14 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
     private val binding get() = _binding!!
     private lateinit var weather: DailyWeather
 
-    private val detailsViewModel: DetailsViewModel by viewModels()
+    private val viewModel: DetailsViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentDailyDetailsBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentDailyDetailsBinding.bind(view)
         val safeArgs: DetailsFragmentArgs by navArgs()
         weather = safeArgs.dailyWeather
         bindViews(weather)
-        return binding.root
     }
 
     override fun onDestroyView() {
@@ -58,6 +55,11 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
         val weatherImage = binding.ivWeatherIcon
         val pressure = binding.tvPressure
         val description = binding.tvDescription
+        val backButton = binding.ivBack
+
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         day.text = dateFormatToDayOfWeek(dailyWeather.dt)
         dayN.text = dateFormat(dailyWeather.dt)
@@ -71,24 +73,37 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
         pressure.text = "${dailyWeather.pressure} гПа"
         description.text = dailyWeather.weather[0].description
 
+
+
         Glide.with(this)
             .load("https://openweathermap.org/img/wn/${dailyWeather.weather[0].icon}.png")
             .into(weatherImage)
-
-
     }
 
-    fun dateFormat(unixTime: Long): String {
-        return DateTimeFormatter.ISO_INSTANT
-            .format(Instant.ofEpochSecond(unixTime))
-            .substringBefore('T')
+    private fun dateFormat(unixTime: Long): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DateTimeFormatter.ISO_INSTANT
+                .format(Instant.ofEpochSecond(unixTime))
+                .substringBefore('T')
+        } else {
+            val date = Date(unixTime * 1000L)
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+            return sdf
+        }
     }
 
-    fun dateFormatToDayOfWeek(unixTime: Long): String {
-        return Instant
-            .ofEpochSecond(unixTime)
-            .atZone(ZoneId.systemDefault())
-            .dayOfWeek.getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"))
+    private fun dateFormatToDayOfWeek(unixTime: Long): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Instant
+                .ofEpochSecond(unixTime)
+                .atZone(ZoneId.systemDefault())
+                .dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+        } else {
+            val date = Date(unixTime * 1000L)
+            val sdf = SimpleDateFormat("EE", Locale.getDefault()).format(date)
+            return sdf
+        }
     }
+
 
 }

@@ -2,8 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_today">
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/navigation_today">
 
     <fragment
         android:id="@+id/navigation_today"
@@ -12,31 +12,19 @@
         tools:layout="@layout/fragment_today" />
 
     <fragment
-        android:id="@+id/navigation_week"
-        android:name="com.tromian.test.weather.ui.week.WeekFragment"
-        android:label="@string/title_week"
-        tools:layout="@layout/fragment_week">
-        <action
-            android:id="@+id/action_navigation_week_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
-        <argument
-            android:name="dailyWeather"
-            app:argType="com.tromian.test.weather.data.daily.DailyWeather" />
-    </fragment>
-
-    <fragment
         android:id="@+id/navigation_map"
         android:name="com.tromian.test.weather.ui.map.MapFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map" />
 
     <fragment
-        android:id="@+id/detailsFragment"
-        android:name="com.tromian.test.weather.ui.details.DetailsFragment"
-        android:label="DetailsFragment"
-        tools:layout="@layout/fragment_daily_details">
+        android:id="@+id/navigation_week"
+        android:name="com.tromian.test.weather.ui.week.WeekFragment"
+        android:label="fragment_week"
+        tools:layout="@layout/fragment_week">
         <argument
             android:name="dailyWeather"
             app:argType="com.tromian.test.weather.data.daily.DailyWeather" />
     </fragment>
+
 </navigation>
