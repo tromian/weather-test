@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.ui.map.MapViewModel
+import com.tromian.test.weather.ui.splash.SplashViewModel
 import com.tromian.test.weather.ui.today.TodayViewModel
 import com.tromian.test.weather.ui.week.WeekViewModel
 
@@ -12,11 +13,17 @@ class ViewModelsFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
+            MainActivityViewModel::class.java -> {
+                MainActivityViewModel(repository)
+            }
             TodayViewModel::class.java -> {
                 TodayViewModel(repository)
             }
             WeekViewModel::class.java -> {
                 WeekViewModel(repository)
+            }
+            SplashViewModel::class.java -> {
+                SplashViewModel(repository)
             }
             MapViewModel::class.java -> {
                 MapViewModel()
