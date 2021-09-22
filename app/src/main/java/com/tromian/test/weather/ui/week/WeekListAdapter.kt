@@ -1,5 +1,6 @@
 package com.tromian.test.weather.ui.week
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tromian.test.weather.data.daily.DailyWeather
 import com.tromian.test.wether.R
+import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.TextStyle
@@ -48,10 +50,16 @@ class WeekListAdapter(val itemCallback: (itemId: Int) -> Unit) :
         }
 
         fun dateFormat(unixTime: Long): String {
-            return Instant
-                .ofEpochSecond(unixTime)
-                .atZone(ZoneId.systemDefault())
-                .dayOfWeek.getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"))
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Instant
+                    .ofEpochSecond(unixTime)
+                    .atZone(ZoneId.systemDefault())
+                    .dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+            } else {
+                val date = Date(unixTime * 1000L)
+                val sdf = SimpleDateFormat("EE", Locale.getDefault()).format(date)
+                return sdf
+            }
         }
     }
 

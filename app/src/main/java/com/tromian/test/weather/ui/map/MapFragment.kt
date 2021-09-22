@@ -165,7 +165,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
 
     private fun setNewPlace(marker: Marker) {
         if (marker.tag == MARKER_TAG) {
-            val geocode = Geocoder(requireContext(), Locale.ENGLISH)
+            val geocode = Geocoder(requireActivity(), Locale.getDefault())
                 .getFromLocation(marker.position.latitude, marker.position.longitude, 1)
             val address = geocode[0].locality
             if (address != null) {
