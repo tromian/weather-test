@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
-        applicationId "com.tromian.test.wether"
+        applicationId "com.tromian.test.weather"
         minSdk 21
-        targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -29,13 +29,7 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'OpenWetherAPIKey', OpenWetherAPIKey
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+
     buildFeatures {
         viewBinding true
     }
@@ -44,14 +38,14 @@ android {
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
-    def dagger_version = "2.35.1"
-    def navigation_version = "2.4.0-alpha04"
+    def dagger_version = "2.39.1"
+    def navigation_version = "2.4.0-alpha09"
     def room_version = "2.3.0"
     def retrofit2_version = "2.9.0"
     def lifecycle_version = "2.3.1"
     def gson_version = "2.9.0"
-    def okhttp_version = "4.9.0"
-    def fragment_ktx_version = "1.4.0-alpha04"
+    def okhttp_version = "5.0.0-alpha.2"
+    def fragment_ktx_version = "1.4.0-alpha10"
 
     // Google Map
     implementation 'com.google.android.gms:play-services-location:18.0.0'
@@ -71,7 +65,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
 
     // Easy Permissions
     implementation 'pub.devrel:easypermissions:3.0.0'

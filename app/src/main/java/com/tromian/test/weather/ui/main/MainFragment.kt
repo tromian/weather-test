@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigationrail.NavigationRailView
 import com.tromian.test.weather.ui.activityViewModel
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.MainFragmentBinding
@@ -37,11 +38,13 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private fun setupNavigation() {
-        val navView: BottomNavigationView = binding.navView
+        val bottomNavMenu: BottomNavigationView = binding.navView
+        val railView: NavigationRailView = binding.navigationRail
         val navHostFragment =
             childFragmentManager.findFragmentById(R.id.nav_host_fragment_main) as NavHostFragment
         val navController = navHostFragment.navController
-        navView.setupWithNavController(navController)
+        bottomNavMenu.setupWithNavController(navController)
+        railView.setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
