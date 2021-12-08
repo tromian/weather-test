@@ -8,6 +8,7 @@ import com.tromian.test.weather.AppConstants
 import com.tromian.test.weather.appComponent
 import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.wether.databinding.ActivityMainBinding
+import java.util.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initPlaces() {
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, AppConstants.GOOGLE_API_KEY)
+            Places.initialize(applicationContext, AppConstants.GOOGLE_API_KEY, Locale.getDefault())
             Places.createClient(this)
         }
     }

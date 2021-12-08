@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.tromian.test.weather.data.daily.DailyWeather
+import com.tromian.test.weather.model.pojo.DailyWeather
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentDailyDetailsBinding
 import java.text.SimpleDateFormat
@@ -61,22 +61,22 @@ class DetailsFragment : Fragment(R.layout.fragment_daily_details) {
             findNavController().navigateUp()
         }
 
-        day.text = dateFormatToDayOfWeek(dailyWeather.dt)
-        dayN.text = dateFormat(dailyWeather.dt)
+        day.text = dateFormatToDayOfWeek(dailyWeather.unixTime)
+        dayN.text = dateFormat(dailyWeather.unixTime)
 
-        tempMorning.text = "${dailyWeather.temp.morn.toInt()} °С"
-        tempDay.text = "${dailyWeather.temp.day.toInt()} °С"
-        tempEvening.text = "${dailyWeather.temp.eve.toInt()} °С"
-        tempNight.text = "${dailyWeather.temp.night.toInt()} °С"
+        tempMorning.text = "${dailyWeather.mornTemp.toInt()} °С"
+        tempDay.text = "${dailyWeather.dayTemp.toInt()} °С"
+        tempEvening.text = "${dailyWeather.eveTemp.toInt()} °С"
+        tempNight.text = "${dailyWeather.nightTemp.toInt()} °С"
 
         clouds.text = "${dailyWeather.clouds} %"
         pressure.text = "${dailyWeather.pressure} гПа"
-        description.text = dailyWeather.weather[0].description
+        description.text = dailyWeather.weather?.description
 
 
 
         Glide.with(this)
-            .load("https://openweathermap.org/img/wn/${dailyWeather.weather[0].icon}.png")
+            .load("https://openweathermap.org/img/wn/${dailyWeather.weather?.icon}.png")
             .into(weatherImage)
     }
 

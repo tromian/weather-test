@@ -24,7 +24,7 @@
         android:label="DetailsFragment">
         <argument
             android:name="dailyWeather"
-            app:argType="com.tromian.test.weather.data.daily.DailyWeather" />
+            app:argType="com.tromian.test.weather.model.pojo.DailyWeather" />
     </fragment>
     <action
         android:id="@+id/action_global_detailsFragment"

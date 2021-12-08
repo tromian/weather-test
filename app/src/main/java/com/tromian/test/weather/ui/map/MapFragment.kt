@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -24,6 +23,7 @@ import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentMapBinding
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import java.io.IOException
 import java.util.*
 
 class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
@@ -44,6 +44,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMapBinding.bind(view)
         mapView = binding.mapView
+
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
         setupDataObservers()
@@ -110,36 +111,31 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
     }
 
     override fun onPause() {
-        super.onPause()
         mapView.onPause()
+        super.onPause()
     }
 
     override fun onStop() {
-        super.onStop()
         mapView.onStop()
+        super.onStop()
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mapView.onDestroy()
         _binding = null
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
+        super.onDestroyView()
     }
 
     override fun onLowMemory() {
-        super.onLowMemory()
         mapView.onLowMemory()
+        super.onLowMemory()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         map.mapType = GoogleMap.MAP_TYPE_NORMAL
         map.uiSettings.isMyLocationButtonEnabled = true
-        viewModel.coordinate.observe(viewLifecycleOwner, Observer {
+        viewModel.coordinate.observe(viewLifecycleOwner, {
             updateMarkerLocation(it)
         })
         map.setOnMarkerClickListener(this)
@@ -165,16 +161,26 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback,
 
     private fun setNewPlace(marker: Marker) {
         if (marker.tag == MARKER_TAG) {
-            val geocode = Geocoder(requireActivity(), Locale.getDefault())
-                .getFromLocation(marker.position.latitude, marker.position.longitude, 1)
-            val address = geocode[0].locality
-            if (address != null) {
-                val newPlace = Place.builder()
-                    .setName(address)
-                    .setLatLng(marker.position).build()
-                activityViewModel().updatePlace(newPlace)
-                findNavController().navigate(R.id.navigation_today)
+            try {
+                val geocode = Geocoder(requireContext(), Locale.getDefault())
+                    .getFromLocation(marker.position.latitude, marker.position.longitude, 1)
+                val address = geocode[0].locality
+                if (address != null) {
+                    val newPlace = Place.builder()
+                        .setName(address)
+                        .setLatLng(marker.position).build()
+                    newPlace.latLng?.let { viewModel.setCoordinate(it) }
+                    activityViewModel().updatePlace(newPlace)
+                    findNavController().navigate(R.id.navigation_today)
+                }
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+                return
+            } catch (e: IOException) {
+                e.printStackTrace()
+                return
             }
+
         }
     }
 
