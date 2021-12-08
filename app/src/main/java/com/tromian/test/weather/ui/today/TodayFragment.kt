@@ -10,10 +10,10 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.tromian.test.weather.appComponent
 import com.tromian.test.weather.data.WeatherRepository
-import com.tromian.test.weather.data.current.CurrentWeather
 import com.tromian.test.weather.model.ErrorResult
 import com.tromian.test.weather.model.PendingResult
 import com.tromian.test.weather.model.SuccessResult
+import com.tromian.test.weather.model.pojo.CurrentWeather
 import com.tromian.test.weather.ui.ViewModelsFactory
 import com.tromian.test.weather.ui.activityViewModel
 import com.tromian.test.wether.R
@@ -100,22 +100,18 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         val pressure = binding.tvPressure
         val description = binding.tvDescription
 
-        temp.text = "${currentWeather.main.temp.toInt()} °С"
-        feelTemp.text = "${currentWeather.main.feelsLike.toInt()} °С"
-        clouds.text = "${currentWeather.clouds.all} %"
-        pressure.text = "${currentWeather.main.pressure} гПа"
-        description.text = currentWeather.weather[0].description
+        temp.text = "${currentWeather.currentTemp.toInt()} °С"
+        feelTemp.text = "${currentWeather.feelsLike.toInt()} °С"
+        clouds.text = "${currentWeather.clouds} %"
+        pressure.text = "${currentWeather.pressure} гПа"
+
+        description.text = currentWeather.weather?.description
 
         Glide.with(this)
-            .load("https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}.png")
+            .load("https://openweathermap.org/img/wn/${currentWeather.weather?.icon}.png")
             .into(weatherImage)
 
 
-    }
-
-
-    companion object {
-        const val TAG = "today"
     }
 
 }

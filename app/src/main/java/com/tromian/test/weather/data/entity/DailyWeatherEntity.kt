@@ -24,20 +24,20 @@ data class DailyWeatherEntity(
     /** Атмосферное давление на уровне моря, гПа */
     val pressure: Int,
     @ColumnInfo(name = "day")
-    val day: Double,
+    val dayTemp: Double,
     @ColumnInfo(name = "eve")
-    val eve: Double,
+    val eveTemp: Double,
     @ColumnInfo(name = "max")
-    val max: Double,
+    val maxTemp: Double,
     @ColumnInfo(name = "min")
-    val min: Double,
+    val minTemp: Double,
     @ColumnInfo(name = "morn")
-    val morn: Double,
+    val mornTemp: Double,
     @ColumnInfo(name = "night")
-    val night: Double,
+    val nightTemp: Double,
     @ColumnInfo(name = "weather_id")
     /** Погодные условия */
-    val weatherId: List<Int>,
+    val weatherId: Int? = null,
     @ColumnInfo(name = "wind_speed")
     /** Скорость ветра */
     val windSpeed: Double,

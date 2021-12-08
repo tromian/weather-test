@@ -22,7 +22,7 @@ data class CurrentWeather(
     /** Сдвиг в секундах от UTC */
     val timezone: Int,
     /** Погодные условия */
-    val weather: List<WeatherDetails>,
+    var weather: WeatherDetails? = null,
     /** Облачность,% */
     val clouds: Int,
     /** Направление ветра, градусы */

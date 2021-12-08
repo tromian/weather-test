@@ -33,7 +33,7 @@ data class CurrentWeatherEntity(
     val timezone: Int,
     @ColumnInfo(name = "weather_id")
     /** Погодные условия */
-    val weatherId: List<Int>,
+    val weatherId: Int? = null,
     @ColumnInfo(name = "clouds")
     /** Облачность,% */
     val clouds: Int,

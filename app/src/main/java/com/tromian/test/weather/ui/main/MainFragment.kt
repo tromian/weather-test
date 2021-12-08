@@ -56,7 +56,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         toolbar = binding.toolbar
         toolbar.inflateMenu(R.menu.today_toolbar_menu)
         activityViewModel().place.observe(viewLifecycleOwner, {
-            toolbar.title = it.name.toString()
+            toolbar.title = it.name
         })
         toolbar.setOnMenuItemClickListener {
             val id = it.itemId

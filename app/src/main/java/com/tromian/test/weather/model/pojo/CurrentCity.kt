@@ -7,7 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class CurrentCity(
     val cityName: String,
     val lat: Double,
-    val lon: Double,
-    val currentWeather: CurrentWeather,
-    val weekWeather: List<DailyWeather>
+    val lon: Double
 ) : Parcelable

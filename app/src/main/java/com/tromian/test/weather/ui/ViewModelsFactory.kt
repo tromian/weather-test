@@ -11,7 +11,7 @@ import com.tromian.test.weather.ui.week.WeekViewModel
 class ViewModelsFactory(
     private val repository: WeatherRepository
 ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
             MainActivityViewModel::class.java -> {
                 MainActivityViewModel(repository)

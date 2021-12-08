@@ -17,11 +17,16 @@ import com.tromian.test.weather.data.entity.WeatherEntity
         DailyWeatherEntity::class,
         WeatherEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class WeatherDB : RoomDatabase() {
+
+    abstract fun weatherDAO(): WeatherDAO
+    abstract fun currentWeatherDAO(): CurrentWeatherDAO
+    abstract fun currentCityDAO(): CurrentCityDAO
+    abstract fun dailyWeatherDAO(): DailyWeatherDAO
 
     companion object {
         private const val DATABASE_NAME = "weather.db"

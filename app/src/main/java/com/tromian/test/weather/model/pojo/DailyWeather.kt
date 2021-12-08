@@ -23,7 +23,7 @@ data class DailyWeather(
     val mornTemp: Double,
     val nightTemp: Double,
     /** Погодные условия */
-    val weather: List<WeatherDetails>,
+    var weather: WeatherDetails? = null,
     /** Скорость ветра */
     val windSpeed: Double,
     /** Температура по ощущениям */

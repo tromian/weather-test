@@ -12,7 +12,6 @@ import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.ui.ViewModelsFactory
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentSplashBinding
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
@@ -41,10 +40,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         _binding = null
     }
 
-    fun loadSplash() {
+    private fun loadSplash() {
         binding.progressBar.display
         lifecycleScope.launchWhenStarted {
-            delay(500)
+            viewModel.loadLocalDataIfExist()
             findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
         }
     }
