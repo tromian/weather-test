@@ -2,19 +2,20 @@ package com.tromian.test.weather.data.daily
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.tromian.test.weather.data.current.Weather
 import kotlinx.parcelize.Parcelize
 
 
 data class DailyResponse(
     @SerializedName("daily")
-    val dailyWeatherList: List<DailyWeather>
+    val dailyWeatherList: List<DailyWeatherResponse>
 )
 
 /**
  * Ответ API данных о погоде на день
  * */
 @Parcelize
-data class DailyWeather(
+data class DailyWeatherResponse(
     @SerializedName("clouds")
     /** Облачность,% */
     val clouds: Int,
@@ -80,14 +81,4 @@ data class Temp(
     val night: Double
 ) : Parcelable
 
-@Parcelize
-data class Weather(
-    @SerializedName("description")
-    val description: String,
-    @SerializedName("icon")
-    val icon: String,
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("main")
-    val main: String
-) : Parcelable
+

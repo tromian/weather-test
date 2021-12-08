@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
  * */
 
 @Parcelize
-data class CurrentWeather(
+data class CurrentWeatherResponse(
     @SerializedName("clouds")
     /** Облачность,% */
     val clouds: Clouds,

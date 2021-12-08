@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_week">
         <argument
             android:name="dailyWeather"
-            app:argType="com.tromian.test.weather.data.daily.DailyWeather" />
+            app:argType="com.tromian.test.weather.model.pojo.DailyWeather" />
     </fragment>
 
 </navigation>

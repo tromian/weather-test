@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.tromian.test.weather.data.daily.DailyWeather
+import com.tromian.test.weather.model.pojo.DailyWeather
 import com.tromian.test.wether.R
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -24,7 +24,7 @@ class WeekListAdapter(val itemCallback: (itemId: Int) -> Unit) :
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DailyWeather>() {
             override fun areItemsTheSame(oldItem: DailyWeather, newItem: DailyWeather): Boolean =
-                oldItem.dt == newItem.dt
+                oldItem.unixTime == newItem.unixTime
 
             override fun areContentsTheSame(oldItem: DailyWeather, newItem: DailyWeather): Boolean =
                 oldItem == newItem
@@ -40,12 +40,12 @@ class WeekListAdapter(val itemCallback: (itemId: Int) -> Unit) :
         private val image: ImageView = itemView.findViewById(R.id.ivDailyIcon)
 
         fun bind(dailyWeather: DailyWeather) {
-            day.text = dateFormat(dailyWeather.dt)
-            maxTemp.text = dailyWeather.temp.max.toInt().toString()
-            minTemp.text = dailyWeather.temp.min.toInt().toString()
-            description.text = dailyWeather.weather[0].description
+            day.text = dateFormat(dailyWeather.unixTime)
+            maxTemp.text = dailyWeather.maxTemp.toInt().toString()
+            minTemp.text = dailyWeather.minTemp.toInt().toString()
+            description.text = dailyWeather.weather?.description
             Glide.with(itemView)
-                .load("https://openweathermap.org/img/wn/${dailyWeather.weather[0].icon}.png")
+                .load("https://openweathermap.org/img/wn/${dailyWeather.weather?.icon}.png")
                 .into(image)
         }
 
