@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.tromian.test.weather.appComponent
-import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.model.ErrorResult
 import com.tromian.test.weather.model.PendingResult
 import com.tromian.test.weather.model.SuccessResult
+import com.tromian.test.weather.model.WeatherRepository
 import com.tromian.test.weather.model.pojo.CurrentWeather
 import com.tromian.test.weather.ui.ViewModelsFactory
 import com.tromian.test.weather.ui.activityViewModel

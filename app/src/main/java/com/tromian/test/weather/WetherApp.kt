@@ -2,6 +2,9 @@ package com.tromian.test.weather
 
 import android.app.Application
 import android.content.Context
+import com.tromian.test.weather.di.AppComponent
+import com.tromian.test.weather.di.DaggerAppComponent
+import com.tromian.test.weather.utils.AppConstants
 
 
 class WeatherApp : Application() {

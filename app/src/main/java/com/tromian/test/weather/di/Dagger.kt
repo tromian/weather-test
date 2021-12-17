@@ -1,15 +1,17 @@
-package com.tromian.test.weather
+package com.tromian.test.weather.di
 
 import android.app.Application
 import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.tromian.test.weather.data.WeatherRepository
+import com.tromian.test.weather.data.WeatherRepositoryImpl
 import com.tromian.test.weather.data.database.WeatherDB
 import com.tromian.test.weather.data.network.WeatherApi
+import com.tromian.test.weather.model.WeatherRepository
 import com.tromian.test.weather.ui.MainActivity
 import com.tromian.test.weather.ui.splash.SplashFragment
 import com.tromian.test.weather.ui.today.TodayFragment
 import com.tromian.test.weather.ui.week.WeekFragment
+import com.tromian.test.weather.utils.AppConstants
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -57,7 +59,7 @@ class AppModule {
         weatherApi: WeatherApi,
         appContext: Application,
     ): WeatherRepository {
-        return WeatherRepository(localDB, weatherApi, appContext)
+        return WeatherRepositoryImpl(localDB, weatherApi, appContext)
     }
 }
 

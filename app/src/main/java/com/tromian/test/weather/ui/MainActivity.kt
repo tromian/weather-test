@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.libraries.places.api.Places
-import com.tromian.test.weather.AppConstants
 import com.tromian.test.weather.appComponent
-import com.tromian.test.weather.data.WeatherRepository
+import com.tromian.test.weather.model.WeatherRepository
+import com.tromian.test.weather.utils.AppConstants
 import com.tromian.test.wether.databinding.ActivityMainBinding
 import java.util.*
 import javax.inject.Inject

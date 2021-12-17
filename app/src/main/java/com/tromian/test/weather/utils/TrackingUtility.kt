@@ -1,4 +1,4 @@
-package com.tromian.test.weather
+package com.tromian.test.weather.utils
 
 import android.Manifest
 import android.content.Context

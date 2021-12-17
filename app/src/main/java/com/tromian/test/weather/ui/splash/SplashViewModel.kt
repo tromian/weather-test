@@ -2,10 +2,10 @@ package com.tromian.test.weather.ui.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tromian.test.weather.AppConstants
-import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.data.toPlace
+import com.tromian.test.weather.model.WeatherRepository
 import com.tromian.test.weather.model.pojo.CurrentCity
+import com.tromian.test.weather.utils.AppConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
