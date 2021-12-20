@@ -41,6 +41,9 @@ interface AppComponent {
             @BindsInstance
             @WeatherApiQualifier
             apiKey: String,
+            @BindsInstance
+            @WeatherApiLanguage
+            language: String
         ): AppComponent
 
     }
@@ -48,6 +51,9 @@ interface AppComponent {
 
 @Qualifier
 annotation class WeatherApiQualifier
+
+@Qualifier
+annotation class WeatherApiLanguage
 
 @Module(includes = [NetworkModule::class, LocalDBModule::class])
 class AppModule {
@@ -66,12 +72,15 @@ class AppModule {
 @Module
 class NetworkModule {
     @Provides
-    fun provideWeatherService(@WeatherApiQualifier apiKey: String): WeatherApi {
+    fun provideWeatherService(
+        @WeatherApiQualifier apiKey: String,
+        @WeatherApiLanguage language: String
+    ): WeatherApi {
         val authInterceptor = Interceptor { chain ->
             val newUrl = chain.request().url
                 .newBuilder()
                 .addQueryParameter("appid", apiKey)
-                .addQueryParameter("lang", AppConstants.LANGUAGE)
+                .addQueryParameter("lang", language)
                 .build()
 
             val newRequest = chain.request()

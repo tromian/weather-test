@@ -4,12 +4,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Geocoder
 import android.location.Location
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -28,6 +29,7 @@ import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentMapBinding
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -38,6 +40,7 @@ class MapFragment : Fragment(R.layout.fragment_map),
     EasyPermissions.PermissionCallbacks {
 
     private var mFusedLocationClient: FusedLocationProviderClient? = null
+    private lateinit var locationManager: LocationManager
 
     private val viewModel: MapViewModel by viewModels()
     private var _binding: FragmentMapBinding? = null
@@ -202,15 +205,17 @@ class MapFragment : Fragment(R.layout.fragment_map),
 
     @SuppressLint("MissingPermission")
     private fun setCurrentLocation() {
+        lifecycleScope.launchWhenResumed {
 
+            mFusedLocationClient?.lastLocation?.addOnCompleteListener(requireActivity()) { task ->
+                val location: Location? = task.result
 
-        mFusedLocationClient?.lastLocation?.addOnCompleteListener(requireActivity()) { task ->
-            val location: Location? = task.result
-
-            if (location != null) {
-                Log.d("location", "lat : ${location.latitude} lon : ${location.longitude}  ")
-                updateMarkerLocation(LatLng(location.latitude, location.longitude))
+                if (location != null) {
+                    Timber.d("lat : " + location.latitude + " lon : " + location.longitude + "  ")
+                    updateMarkerLocation(LatLng(location.latitude, location.longitude))
+                }
             }
+
         }
 
     }

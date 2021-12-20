@@ -6,6 +6,7 @@ import com.tromian.test.weather.di.AppComponent
 import com.tromian.test.weather.di.DaggerAppComponent
 import com.tromian.test.weather.utils.AppConstants
 import com.tromian.test.wether.BuildConfig
+import com.tromian.test.wether.R
 import timber.log.Timber
 
 
@@ -20,7 +21,8 @@ class WeatherApp : Application() {
         super.onCreate()
         _appComponent = DaggerAppComponent.factory().create(
             this,
-            AppConstants.WEATHER_API_KEY
+            AppConstants.WEATHER_API_KEY,
+            getString(R.string.api_language)
         )
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

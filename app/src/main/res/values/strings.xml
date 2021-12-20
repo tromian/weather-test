@@ -1,4 +1,5 @@
 <resources>
+    <string name="api_language">en</string>
     <string name="app_name">Weather</string>
     <string name="title_today">Today</string>
     <string name="title_week">Week</string>
