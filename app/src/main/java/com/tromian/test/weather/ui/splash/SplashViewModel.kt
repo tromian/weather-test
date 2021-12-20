@@ -8,6 +8,7 @@ import com.tromian.test.weather.model.pojo.CurrentCity
 import com.tromian.test.weather.utils.AppConstants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SplashViewModel(
     private val repository: WeatherRepository
@@ -22,6 +23,7 @@ class SplashViewModel(
 
     fun loadLocalDataIfExist() = viewModelScope.launch(Dispatchers.IO) {
         val location = checkLastLocation()
+        Timber.tag("data").d("Initial Location:  $location")
         if (repository.checkIfNeedUpdate(location.cityName)) {
             updateWeatherData(location)
         }
@@ -39,9 +41,11 @@ class SplashViewModel(
     private suspend fun updateWeatherData(location: CurrentCity) {
         val newCurrentData = repository.loadCurrentWeatherByCoord(location.toPlace()) ?: return
         repository.saveCurrentWeatherToDB(newCurrentData)
+        Timber.tag("data").d("newCurrentData:  $newCurrentData")
 
         val newDailyData = repository.loadWeeklyWeatherList(location.toPlace())
         if (newDailyData.isEmpty()) return
+        Timber.tag("data").d("newDailyData:  $newDailyData")
         repository.saveDailyWeatherListToDB(newDailyData)
     }
 

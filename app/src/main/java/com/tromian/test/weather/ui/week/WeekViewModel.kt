@@ -12,6 +12,7 @@ import com.tromian.test.weather.ui.LiveResult
 import com.tromian.test.weather.ui.MutableLiveResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class WeekViewModel(
     private val repository: WeatherRepository
@@ -23,29 +24,26 @@ class WeekViewModel(
     fun loadWeeklyWeather(place: Place) {
         viewModelScope.launch(Dispatchers.IO) {
             _dailyList.postValue(PendingResult())
-
-            loadLocalData()
-
-            loadRemoteData(place)
+            loadData(place)
 
         }
     }
 
-    private fun loadLocalData() {
+    private suspend fun loadData(place: Place) {
         val localData = repository.getDailyWeatherListFromDB()
+        Timber.tag("data").d("localData:  $localData")
         if (localData.isNotEmpty()) {
             _dailyList.postValue(SuccessResult(localData))
         }
-    }
-
-    private suspend fun loadRemoteData(place: Place) {
         val remoteData = repository.loadWeeklyWeatherList(place)
-        if (remoteData.isEmpty()) {
+        Timber.tag("data").d("remoteData:  $remoteData")
+        if (localData.isEmpty() && remoteData.isEmpty()) {
             _dailyList.postValue(ErrorResult(IllegalStateException("no data")))
-        } else {
+        } else if (remoteData.isNotEmpty()) {
             repository.saveDailyWeatherListToDB(remoteData)
-            loadLocalData()
+            _dailyList.postValue(SuccessResult(remoteData))
         }
+
     }
 
 }

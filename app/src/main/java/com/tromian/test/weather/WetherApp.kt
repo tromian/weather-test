@@ -5,6 +5,8 @@ import android.content.Context
 import com.tromian.test.weather.di.AppComponent
 import com.tromian.test.weather.di.DaggerAppComponent
 import com.tromian.test.weather.utils.AppConstants
+import com.tromian.test.wether.BuildConfig
+import timber.log.Timber
 
 
 class WeatherApp : Application() {
@@ -20,6 +22,9 @@ class WeatherApp : Application() {
             this,
             AppConstants.WEATHER_API_KEY
         )
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }
 

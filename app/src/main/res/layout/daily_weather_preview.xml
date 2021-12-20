@@ -2,11 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:padding="8dp"
-    app:cardCornerRadius="4dp">
+    style="@style/MyCardView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,10 +10,11 @@
 
         <TextView
             android:id="@+id/tvMinTemp"
+            style="@style/TextViewData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/textMinT"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="@+id/textMinT"
             tools:text="15" />
 
@@ -27,19 +24,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:textSize="30sp"
+            style="@style/TextViewH1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Понедельник" />
 
         <TextView
             android:id="@+id/tvMaxTemp"
+            style="@style/TextViewData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/textMaxT"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="@+id/textMaxT"
-            tools:text="20" />
+            tools:text="15" />
 
         <TextView
             android:id="@+id/textMaxT"
@@ -48,6 +46,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/title_max_temp"
+            style="@style/TextViewH2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDay" />
 
@@ -59,16 +58,10 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:text="@string/title_min_temp"
+            style="@style/TextViewH2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMaxT" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="129dp" />
 
         <ImageView
             android:id="@+id/ivDailyIcon"
@@ -90,7 +83,8 @@
             app:layout_constraintEnd_toEndOf="@+id/ivDailyIcon"
             app:layout_constraintStart_toStartOf="@+id/ivDailyIcon"
             app:layout_constraintTop_toBottomOf="@+id/ivDailyIcon"
-            tools:text="Clear Sky" />
+            tools:text="Clear Sky"
+            style="@style/TextViewData" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline4"

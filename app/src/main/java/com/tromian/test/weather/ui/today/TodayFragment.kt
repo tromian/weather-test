@@ -60,10 +60,10 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     }
 
     private fun showError() {
-        binding.root.children.forEach {
+        binding.todayData.root.children.forEach {
             if (it.id == R.id.error_layout) {
-                binding.errorLayout.root.visibility = View.VISIBLE
-                binding.errorLayout.btnRetry.setOnClickListener {
+                binding.todayData.errorLayout.root.visibility = View.VISIBLE
+                binding.todayData.errorLayout.btnRetry.setOnClickListener {
                     val place = activityViewModel().place.value ?: return@setOnClickListener
                     viewModel.loadWeather(place)
                 }
@@ -72,7 +72,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     }
 
     private fun showPending() {
-        binding.root.children.forEach {
+        binding.todayData.root.children.forEach {
             if (it.id == R.id.progressBarToday) {
                 it.visibility = View.VISIBLE
             } else it.visibility = View.GONE
@@ -87,18 +87,17 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     @SuppressLint("SetTextI18n")
     private fun bindViews(currentWeather: CurrentWeather) {
-        binding.root.children.forEach {
+        binding.todayData.root.children.forEach {
             if (it.id == R.id.error_layout || it.id == R.id.progressBarToday) {
-                binding.errorLayout.root.visibility = View.GONE
                 it.visibility = View.GONE
             } else it.visibility = View.VISIBLE
         }
-        val temp = binding.tvCurrentTemperature
-        val feelTemp = binding.tvFeelingTemperature
-        val clouds = binding.tvClouds
-        val weatherImage = binding.ivWeatherIcon
-        val pressure = binding.tvPressure
-        val description = binding.tvDescription
+        val temp = binding.todayData.tvCurrentTemperature
+        val feelTemp = binding.todayData.tvFeelingTemperature
+        val clouds = binding.todayData.tvClouds
+        val weatherImage = binding.todayData.ivWeatherIcon
+        val pressure = binding.todayData.tvPressure
+        val description = binding.todayData.tvDescription
 
         temp.text = "${currentWeather.currentTemp.toInt()} °С"
         feelTemp.text = "${currentWeather.feelsLike.toInt()} °С"

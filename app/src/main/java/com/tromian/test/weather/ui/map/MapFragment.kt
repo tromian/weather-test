@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -35,7 +36,8 @@ class MapFragment : Fragment(R.layout.fragment_map),
     GoogleMap.OnMarkerClickListener,
     GoogleMap.OnMapClickListener,
     EasyPermissions.PermissionCallbacks {
-    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+
+    private var mFusedLocationClient: FusedLocationProviderClient? = null
 
     private val viewModel: MapViewModel by viewModels()
     private var _binding: FragmentMapBinding? = null
@@ -92,6 +94,7 @@ class MapFragment : Fragment(R.layout.fragment_map),
     override fun onDestroyView() {
         mapView.onDestroy()
         _binding = null
+        mFusedLocationClient = null
         super.onDestroyView()
     }
 
@@ -199,12 +202,17 @@ class MapFragment : Fragment(R.layout.fragment_map),
 
     @SuppressLint("MissingPermission")
     private fun setCurrentLocation() {
-        mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+
+
+        mFusedLocationClient?.lastLocation?.addOnCompleteListener(requireActivity()) { task ->
             val location: Location? = task.result
+
             if (location != null) {
+                Log.d("location", "lat : ${location.latitude} lon : ${location.longitude}  ")
                 updateMarkerLocation(LatLng(location.latitude, location.longitude))
             }
         }
+
     }
 
     companion object {
