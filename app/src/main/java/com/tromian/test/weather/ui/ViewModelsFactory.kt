@@ -2,7 +2,7 @@ package com.tromian.test.weather.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tromian.test.weather.data.WeatherRepository
+import com.tromian.test.weather.model.WeatherRepository
 import com.tromian.test.weather.ui.map.MapViewModel
 import com.tromian.test.weather.ui.splash.SplashViewModel
 import com.tromian.test.weather.ui.today.TodayViewModel

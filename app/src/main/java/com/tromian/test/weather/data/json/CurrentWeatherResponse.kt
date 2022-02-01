@@ -1,14 +1,12 @@
 package com.tromian.test.weather.data.current
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 /**
  * Текущее значение погоды
  * */
 
-@Parcelize
+
 data class CurrentWeatherResponse(
     @SerializedName("clouds")
     /** Облачность,% */
@@ -34,9 +32,9 @@ data class CurrentWeatherResponse(
     @SerializedName("wind")
     /** Скорость ветра ... */
     val wind: Wind
-) : Parcelable
+)
 
-@Parcelize
+
 data class Main(
     @SerializedName("feels_like")
     /** Температура по восприятию */
@@ -50,16 +48,16 @@ data class Main(
     @SerializedName("temp")
     /** Температура */
     val temp: Double
-) : Parcelable
+)
 
-@Parcelize
+
 data class Clouds(
     @SerializedName("all")
     /** Облачность,% */
     val all: Int
-) : Parcelable
+)
 
-@Parcelize
+
 data class Weather(
     @SerializedName("description")
     /** Погодные условия в группе */
@@ -73,9 +71,9 @@ data class Weather(
     @SerializedName("main")
     /** Группа погодных параметров (Дождь, Снег, Экстрим и др.) */
     val main: String
-) : Parcelable
+)
 
-@Parcelize
+
 data class Wind(
     @SerializedName("deg")
     /** Направление ветра, градусы */
@@ -83,4 +81,4 @@ data class Wind(
     @SerializedName("speed")
     /** Скорость ветра метр/сек */
     val speed: Double
-) : Parcelable
+)

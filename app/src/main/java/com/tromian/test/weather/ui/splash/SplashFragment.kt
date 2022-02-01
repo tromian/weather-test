@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.tromian.test.weather.appComponent
-import com.tromian.test.weather.data.WeatherRepository
+import com.tromian.test.weather.model.WeatherRepository
 import com.tromian.test.weather.ui.ViewModelsFactory
 import com.tromian.test.wether.R
 import com.tromian.test.wether.databinding.FragmentSplashBinding

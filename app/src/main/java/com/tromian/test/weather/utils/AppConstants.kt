@@ -1,4 +1,4 @@
-package com.tromian.test.weather
+package com.tromian.test.weather.utils
 
 import com.tromian.test.wether.BuildConfig
 

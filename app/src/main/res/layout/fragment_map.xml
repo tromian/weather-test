@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="4dp"
     tools:context="com.tromian.test.weather.ui.map.MapFragment">
 
 
@@ -29,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck"
         android:focusable="true"
-        android:visibility="gone"
+        android:visibility="visible"
         android:contentDescription="@string/my_location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

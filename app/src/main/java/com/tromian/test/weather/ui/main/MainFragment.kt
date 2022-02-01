@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigationrail.NavigationRailView
 import com.tromian.test.weather.ui.activityViewModel
@@ -17,7 +17,7 @@ import com.tromian.test.wether.databinding.MainFragmentBinding
 class MainFragment : Fragment(R.layout.main_fragment) {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: MaterialToolbar
 
     private val placeActivityLauncher = registerForActivityResult(PlaceActivityContract()) {
         if (it != null) {
