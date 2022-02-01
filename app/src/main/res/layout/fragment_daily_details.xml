@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorCardTransparent"
     tools:context="com.tromian.test.weather.ui.today.TodayFragment">
 
     <TextView
@@ -12,8 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Утро"
-        android:textSize="16sp"
-        android:textStyle="italic"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toStartOf="@+id/textDay"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="День"
-        android:textSize="16sp"
-        android:textStyle="italic"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toStartOf="@+id/textEvening"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textMorning"
@@ -38,8 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Вечер"
-        android:textSize="16sp"
-        android:textStyle="italic"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toStartOf="@+id/textNight"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textDay"
@@ -51,8 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Ночь"
-        android:textSize="16sp"
-        android:textStyle="italic"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textEvening"
@@ -63,8 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        style="@style/TextViewH1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_description"
         android:text="Температура" />
@@ -74,11 +70,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        style="@style/TextViewH1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_details"
+        app:layout_constraintTop_toBottomOf="@+id/ivBack"
         tools:text="Понедельник" />
 
     <TextView
@@ -87,8 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/TextViewH2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDayOfWeek"
         tools:text="Понедельник" />
@@ -98,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="16sp"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toEndOf="@+id/textMorning"
         app:layout_constraintStart_toStartOf="@+id/textMorning"
         app:layout_constraintTop_toBottomOf="@+id/textMorning"
@@ -109,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="16sp"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toEndOf="@+id/textDay"
         app:layout_constraintStart_toStartOf="@+id/textDay"
         app:layout_constraintTop_toBottomOf="@+id/textDay"
@@ -120,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="16sp"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toEndOf="@+id/textEvening"
         app:layout_constraintStart_toStartOf="@+id/textEvening"
         app:layout_constraintTop_toBottomOf="@+id/textEvening"
@@ -131,7 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="16sp"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toEndOf="@+id/textNight"
         app:layout_constraintStart_toStartOf="@+id/textNight"
         app:layout_constraintTop_toBottomOf="@+id/textNight"
@@ -141,12 +135,12 @@
         android:id="@+id/ivWeatherIcon"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="64dp"
         android:src="@drawable/ic_weather_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_details" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textClouds"
@@ -155,8 +149,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="Облачность"
-        android:textSize="16sp"
-        android:textStyle="italic"
+        style="@style/TextViewH2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_morning" />
 
@@ -167,7 +160,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="38%"
-        android:textSize="16sp"
+        style="@style/TextViewData"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textClouds" />
 
@@ -178,8 +171,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Атмосферное давление"
-        android:textSize="16sp"
-        android:textStyle="italic"
+        style="@style/TextViewH2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvClouds" />
 
@@ -189,7 +181,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:textSize="16sp"
+        style="@style/TextViewData"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         tools:text="24 гПа" />
@@ -216,8 +208,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
+        style="@style/TextViewData"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/ivWeatherIcon"
         tools:text="описание" />
@@ -229,27 +221,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="123dp" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_details"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/ivBack"
         android:layout_width="40dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_details"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_details"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_details" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

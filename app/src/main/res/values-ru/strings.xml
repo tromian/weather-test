@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_language">ru</string>
+    <string name="app_name">Погода</string>
+    <string name="title_today">Сегодня</string>
+    <string name="title_week">Неделя</string>
+    <string name="title_map">Карта</string>
+    <string name="my_location">Моя Локация</string>
+    <string name="search">Поиск</string>
+    <string name="feeling_title">По ощущениям</string>
+    <string name="temperature_title">Температура</string>
+    <string name="title_min_temp">Мин. темп. °С</string>
+    <string name="title_max_temp">Макc. темп. °С</string>
+    <string name="text_loading_error">Не удалось загрузить данные по этому городу,
+        проверьте подключение к интернету.</string>
+    <string name="retry_btn_title">Обновить</string>
+    <string name="text_weather_week">Прогноз погоды на неделю</string>
+    <string name="title_feels_like">Ощущается как</string>
+    <string name="title_temperature">Температура</string>
+    <string name="title_clouds">Облачность</string>
+    <string name="title_pressure">Атмосферное давление</string>
+</resources>

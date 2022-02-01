@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="TextViewPrimary">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextViewH1" parent="TextViewPrimary">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextViewH2" parent="TextViewPrimary">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="TextViewDataLarge" parent="TextViewPrimary">
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="TextViewData" parent="TextViewPrimary">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="MyToolbar">
+        <item name="android:paddingTop">4dp</item>
+        <item name="background">@color/colorTransparent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="elevation">0dp</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+
+
+    <style name="MyCardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">@color/colorCardTransparent</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="MyMenuView">
+        <item name="android:background">@color/colorTransparent</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+</resources>

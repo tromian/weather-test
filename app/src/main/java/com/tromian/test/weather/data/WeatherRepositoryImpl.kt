@@ -6,6 +6,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.tromian.test.weather.data.database.WeatherDB
 import com.tromian.test.weather.data.network.NetworkConnection
 import com.tromian.test.weather.data.network.WeatherApi
+import com.tromian.test.weather.model.WeatherRepository
 import com.tromian.test.weather.model.pojo.CurrentCity
 import com.tromian.test.weather.model.pojo.CurrentWeather
 import com.tromian.test.weather.model.pojo.DailyWeather
@@ -14,11 +15,11 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class WeatherRepository @Inject constructor(
+class WeatherRepositoryImpl @Inject constructor(
     private val db: WeatherDB,
     private val weatherApi: WeatherApi,
     private val context: Context
-) {
+) : WeatherRepository {
     private val currentTime = System.currentTimeMillis()
 
     /**-------------------------Operations with DB------------------------* */
@@ -27,25 +28,25 @@ class WeatherRepository @Inject constructor(
         return db.currentWeatherDAO().getLastUpdateTime(city)
     }
 
-    fun checkIfNeedUpdate(city: String): Boolean {
+    override fun checkIfNeedUpdate(city: String): Boolean {
         val lastUpdateTime = getLastUpdateTimeByCityName(city)
         val diff = (currentTime - lastUpdateTime * 1000) / (1000L * 60)
         return diff > 30
     }
 
-    fun saveLocationToDB(currentCity: CurrentCity) {
+    override fun saveLocationToDB(currentCity: CurrentCity) {
         db.currentCityDAO().clearCurrentCityTable()
         db.currentCityDAO().saveCurrentLocation(currentCity.toEntity())
     }
 
-    fun getLocationFromDB(): CurrentCity? {
+    override fun getLocationFromDB(): CurrentCity? {
         return if (db.currentCityDAO().checkCurrentLocationCount() > 0) {
             db.currentCityDAO().getCurrentLocation().toDomain()
         } else null
     }
 
 
-    fun saveCurrentWeatherToDB(currentWeather: CurrentWeather) {
+    override fun saveCurrentWeatherToDB(currentWeather: CurrentWeather) {
         db.currentWeatherDAO().saveCurrentWeather(currentWeather.toEntity())
         currentWeather.weather?.let { db.weatherDAO().saveWeatherDetails(it.toEntity()) }
     }
@@ -60,7 +61,7 @@ class WeatherRepository @Inject constructor(
 
     }
 
-    fun saveDailyWeatherListToDB(dailyList: List<DailyWeather>) {
+    override fun saveDailyWeatherListToDB(dailyList: List<DailyWeather>) {
         db.dailyWeatherDAO().clearTable()
         dailyList.forEach {
             val weatherDetails = it.weather
@@ -73,7 +74,7 @@ class WeatherRepository @Inject constructor(
         })
     }
 
-    fun getCurrentWeatherFromDB(city: String): CurrentWeather? {
+    override fun getCurrentWeatherFromDB(city: String): CurrentWeather? {
         return if (db.currentWeatherDAO().checkCurrentTableCount(city) > 0) {
             val entity = db.currentWeatherDAO().getCurrentWeatherByCityName(city)
             if (entity.weatherId != null) {
@@ -86,7 +87,7 @@ class WeatherRepository @Inject constructor(
         } else null
     }
 
-    fun getDailyWeatherListFromDB(): List<DailyWeather> {
+    override fun getDailyWeatherListFromDB(): List<DailyWeather> {
         return if (db.dailyWeatherDAO().checkDailyTableCount() > 0) {
             val listEntity = db.dailyWeatherDAO().getDailyWeatherList()
             listEntity.map {
@@ -103,7 +104,7 @@ class WeatherRepository @Inject constructor(
 
     /**-------------------------Operations with Network----------------* */
 
-    suspend fun loadCurrentWeatherByCoord(place: Place): CurrentWeather? {
+    override suspend fun loadCurrentWeatherByCoord(place: Place): CurrentWeather? {
         return if (NetworkConnection.isNetworkAvailable(context)) {
             try {
                 weatherApi.getCurrentWeatherByCoordinate(
@@ -121,7 +122,7 @@ class WeatherRepository @Inject constructor(
 
     }
 
-    suspend fun loadWeeklyWeatherList(place: Place): List<DailyWeather> {
+    override suspend fun loadWeeklyWeatherList(place: Place): List<DailyWeather> {
         return if (NetworkConnection.isNetworkAvailable(context)) {
             try {
                 return weatherApi.getDailyWeatherByCoordinate(

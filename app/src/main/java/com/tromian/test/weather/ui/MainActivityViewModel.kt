@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.libraries.places.api.model.Place
-import com.tromian.test.weather.data.WeatherRepository
 import com.tromian.test.weather.data.toCity
 import com.tromian.test.weather.data.toPlace
+import com.tromian.test.weather.model.WeatherRepository
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(

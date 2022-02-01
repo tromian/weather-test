@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context="com.tromian.test.weather.ui.MainActivity">
 
+    <ImageView
+        android:id="@+id/ivBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/background_image"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_activity_container_view"
         android:name="androidx.navigation.fragment.NavHostFragment"
